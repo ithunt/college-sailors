@@ -31,3 +31,6 @@ field string --fieldName fleetName
 focus --class ~.model.FleetScore
 field number --fieldName place --type int
 json all
+web mvc json setup
+web mvc json all --package com.iancodes.collegesailors.rest
+perform package
