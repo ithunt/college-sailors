@@ -1,0 +1,33 @@
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2014-04-09 19:54:33
+hint
+project --topLevelPackage com.iancodes.collegesailors
+help
+hin
+hint
+jpa setup --provider HIBERNATE --database H2_IN_MEMORY 
+entity jpa --class com.iancodes.collegesailors.model.Sailor
+field string --fieldName sailorName 
+field number --fieldName graduationYear --type int
+entity jpa --class com.iancodes.collegesailors.model.College
+field string --fieldName collegeName
+field string --fieldName burgee
+field set --fieldName sailors --type ~.model.Sailor
+entity jpa --class ~.model.Regatta 
+field reference --fieldName host --type ~.model.College
+// [failed] field date --fieldName date --type java.util.Date
+field date --fieldName regattaDate --type java.util.Date
+field string --fieldName regattaName
+field string --fieldName boat
+field string --fieldName scoring
+entity jpa --class ~.model.Race 
+entity jpa --class ~.model.FleetScore
+entity jpa --class ~.model.Team
+field date --fieldName created --type java.util.Date 
+field set --fieldName sailors --type ~.model.sailor
+focus --class ~.model.FleetScore
+field number --fieldName races --type int
+entity jpa --class ~.model.Fleet 
+field string --fieldName fleetName
+focus --class ~.model.FleetScore
+field number --fieldName place --type int
+json all
