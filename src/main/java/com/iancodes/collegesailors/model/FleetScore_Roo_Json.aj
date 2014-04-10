@@ -13,27 +13,33 @@ import java.util.List;
 privileged aspect FleetScore_Roo_Json {
     
     public String FleetScore.toJson() {
-        return new JSONSerializer().exclude("*.class").serialize(this);
+        return new JSONSerializer()
+        .exclude("*.class").serialize(this);
     }
     
     public String FleetScore.toJson(String[] fields) {
-        return new JSONSerializer().include(fields).exclude("*.class").serialize(this);
+        return new JSONSerializer()
+        .include(fields).exclude("*.class").serialize(this);
     }
     
     public static FleetScore FleetScore.fromJsonToFleetScore(String json) {
-        return new JSONDeserializer<FleetScore>().use(null, FleetScore.class).deserialize(json);
+        return new JSONDeserializer<FleetScore>()
+        .use(null, FleetScore.class).deserialize(json);
     }
     
     public static String FleetScore.toJsonArray(Collection<FleetScore> collection) {
-        return new JSONSerializer().exclude("*.class").serialize(collection);
+        return new JSONSerializer()
+        .exclude("*.class").serialize(collection);
     }
     
     public static String FleetScore.toJsonArray(Collection<FleetScore> collection, String[] fields) {
-        return new JSONSerializer().include(fields).exclude("*.class").serialize(collection);
+        return new JSONSerializer()
+        .include(fields).exclude("*.class").serialize(collection);
     }
     
     public static Collection<FleetScore> FleetScore.fromJsonArrayToFleetScores(String json) {
-        return new JSONDeserializer<List<FleetScore>>().use(null, ArrayList.class).use("values", FleetScore.class).deserialize(json);
+        return new JSONDeserializer<List<FleetScore>>()
+        .use("values", FleetScore.class).deserialize(json);
     }
     
 }

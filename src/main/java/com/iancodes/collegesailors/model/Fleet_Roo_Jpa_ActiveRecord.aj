@@ -7,6 +7,7 @@ import com.iancodes.collegesailors.model.Fleet;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 privileged aspect Fleet_Roo_Jpa_ActiveRecord {
@@ -14,30 +15,60 @@ privileged aspect Fleet_Roo_Jpa_ActiveRecord {
     @PersistenceContext
     transient EntityManager Fleet.entityManager;
     
+    public static final List<String> Fleet.fieldNames4OrderClauseFilter = java.util.Arrays.asList("fleetName");
+    
     public static final EntityManager Fleet.entityManager() {
         EntityManager em = new Fleet().entityManager;
         if (em == null) throw new IllegalStateException("Entity manager has not been injected (is the Spring Aspects JAR configured as an AJC/AJDT aspects library?)");
         return em;
     }
     
+    @Transactional
     public static long Fleet.countFleets() {
-        return entityManager().createQuery("SELECT COUNT(o) FROM Fleet o", Long.class).getSingleResult();
+        return findAllFleets().size();
     }
     
+    @Transactional
     public static List<Fleet> Fleet.findAllFleets() {
         return entityManager().createQuery("SELECT o FROM Fleet o", Fleet.class).getResultList();
     }
     
-    public static Fleet Fleet.findFleet(Long id) {
-        if (id == null) return null;
+    @Transactional
+    public static List<Fleet> Fleet.findAllFleets(String sortFieldName, String sortOrder) {
+        String jpaQuery = "SELECT o FROM Fleet o";
+        if (fieldNames4OrderClauseFilter.contains(sortFieldName)) {
+            jpaQuery = jpaQuery + " ORDER BY " + sortFieldName;
+            if ("ASC".equalsIgnoreCase(sortOrder) || "DESC".equalsIgnoreCase(sortOrder)) {
+                jpaQuery = jpaQuery + " " + sortOrder;
+            }
+        }
+        return entityManager().createQuery(jpaQuery, Fleet.class).getResultList();
+    }
+    
+    @Transactional
+    public static Fleet Fleet.findFleet(String id) {
+        if (id == null || id.length() == 0) return null;
         return entityManager().find(Fleet.class, id);
     }
     
+    @Transactional
     public static List<Fleet> Fleet.findFleetEntries(int firstResult, int maxResults) {
         return entityManager().createQuery("SELECT o FROM Fleet o", Fleet.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
     }
     
     @Transactional
+    public static List<Fleet> Fleet.findFleetEntries(int firstResult, int maxResults, String sortFieldName, String sortOrder) {
+        String jpaQuery = "SELECT o FROM Fleet o";
+        if (fieldNames4OrderClauseFilter.contains(sortFieldName)) {
+            jpaQuery = jpaQuery + " ORDER BY " + sortFieldName;
+            if ("ASC".equalsIgnoreCase(sortOrder) || "DESC".equalsIgnoreCase(sortOrder)) {
+                jpaQuery = jpaQuery + " " + sortOrder;
+            }
+        }
+        return entityManager().createQuery(jpaQuery, Fleet.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
+    }
+    
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void Fleet.persist() {
         if (this.entityManager == null) this.entityManager = entityManager();
         this.entityManager.persist(this);

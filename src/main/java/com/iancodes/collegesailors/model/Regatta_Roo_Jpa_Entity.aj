@@ -10,33 +10,35 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Version;
+import org.datanucleus.api.jpa.annotations.Extension;
 
 privileged aspect Regatta_Roo_Jpa_Entity {
     
     declare @type: Regatta: @Entity;
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Extension(vendorName = "datanucleus", key = "gae.encoded-pk", value = "true")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long Regatta.id;
+    private String Regatta.id;
     
     @Version
     @Column(name = "version")
-    private Integer Regatta.version;
+    private Long Regatta.version;
     
-    public Long Regatta.getId() {
+    public String Regatta.getId() {
         return this.id;
     }
     
-    public void Regatta.setId(Long id) {
+    public void Regatta.setId(String id) {
         this.id = id;
     }
     
-    public Integer Regatta.getVersion() {
+    public Long Regatta.getVersion() {
         return this.version;
     }
     
-    public void Regatta.setVersion(Integer version) {
+    public void Regatta.setVersion(Long version) {
         this.version = version;
     }
     

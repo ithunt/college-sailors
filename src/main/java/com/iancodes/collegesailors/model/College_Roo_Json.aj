@@ -13,27 +13,33 @@ import java.util.List;
 privileged aspect College_Roo_Json {
     
     public String College.toJson() {
-        return new JSONSerializer().exclude("*.class").serialize(this);
+        return new JSONSerializer()
+        .exclude("*.class").serialize(this);
     }
     
     public String College.toJson(String[] fields) {
-        return new JSONSerializer().include(fields).exclude("*.class").serialize(this);
+        return new JSONSerializer()
+        .include(fields).exclude("*.class").serialize(this);
     }
     
     public static College College.fromJsonToCollege(String json) {
-        return new JSONDeserializer<College>().use(null, College.class).deserialize(json);
+        return new JSONDeserializer<College>()
+        .use(null, College.class).deserialize(json);
     }
     
     public static String College.toJsonArray(Collection<College> collection) {
-        return new JSONSerializer().exclude("*.class").serialize(collection);
+        return new JSONSerializer()
+        .exclude("*.class").serialize(collection);
     }
     
     public static String College.toJsonArray(Collection<College> collection, String[] fields) {
-        return new JSONSerializer().include(fields).exclude("*.class").serialize(collection);
+        return new JSONSerializer()
+        .include(fields).exclude("*.class").serialize(collection);
     }
     
     public static Collection<College> College.fromJsonArrayToColleges(String json) {
-        return new JSONDeserializer<List<College>>().use(null, ArrayList.class).use("values", College.class).deserialize(json);
+        return new JSONDeserializer<List<College>>()
+        .use("values", College.class).deserialize(json);
     }
     
 }

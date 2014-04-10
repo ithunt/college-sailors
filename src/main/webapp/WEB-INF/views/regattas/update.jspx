@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <form:update id="fu_com_iancodes_collegesailors_model_Regatta" modelAttribute="regatta" path="/regattas" versionField="Version" z="eGlZx8D4d88r5O6ojhDhnRias3s=">
+        <field:select field="host" id="c_com_iancodes_collegesailors_model_Regatta_host" itemValue="id" items="${colleges}" path="/colleges" z="CFvna0PWxmzZEhpOQrqsb7oDO+4="/>
+        <field:datetime dateTimePattern="${regatta_regattadate_date_format}" field="regattaDate" id="c_com_iancodes_collegesailors_model_Regatta_regattaDate" z="oSCbpZfQClp8lyAw4vbygxAL5/c="/>
+        <field:input field="regattaName" id="c_com_iancodes_collegesailors_model_Regatta_regattaName" z="R8MLpEZdL4SgvJG4PLWK1Afis58="/>
+        <field:input field="boat" id="c_com_iancodes_collegesailors_model_Regatta_boat" z="Jm84vc3CGLFAvWyhRLFWiw4XF4c="/>
+        <field:input field="scoring" id="c_com_iancodes_collegesailors_model_Regatta_scoring" z="J2blLv9BWgEApm5SpfFfsZk7fco="/>
+    </form:update>
+</div>

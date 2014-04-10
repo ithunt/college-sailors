@@ -13,27 +13,33 @@ import java.util.List;
 privileged aspect Race_Roo_Json {
     
     public String Race.toJson() {
-        return new JSONSerializer().exclude("*.class").serialize(this);
+        return new JSONSerializer()
+        .exclude("*.class").serialize(this);
     }
     
     public String Race.toJson(String[] fields) {
-        return new JSONSerializer().include(fields).exclude("*.class").serialize(this);
+        return new JSONSerializer()
+        .include(fields).exclude("*.class").serialize(this);
     }
     
     public static Race Race.fromJsonToRace(String json) {
-        return new JSONDeserializer<Race>().use(null, Race.class).deserialize(json);
+        return new JSONDeserializer<Race>()
+        .use(null, Race.class).deserialize(json);
     }
     
     public static String Race.toJsonArray(Collection<Race> collection) {
-        return new JSONSerializer().exclude("*.class").serialize(collection);
+        return new JSONSerializer()
+        .exclude("*.class").serialize(collection);
     }
     
     public static String Race.toJsonArray(Collection<Race> collection, String[] fields) {
-        return new JSONSerializer().include(fields).exclude("*.class").serialize(collection);
+        return new JSONSerializer()
+        .include(fields).exclude("*.class").serialize(collection);
     }
     
     public static Collection<Race> Race.fromJsonArrayToRaces(String json) {
-        return new JSONDeserializer<List<Race>>().use(null, ArrayList.class).use("values", Race.class).deserialize(json);
+        return new JSONDeserializer<List<Race>>()
+        .use("values", Race.class).deserialize(json);
     }
     
 }

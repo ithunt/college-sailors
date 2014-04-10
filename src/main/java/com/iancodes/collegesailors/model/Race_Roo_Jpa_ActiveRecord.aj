@@ -7,6 +7,7 @@ import com.iancodes.collegesailors.model.Race;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 privileged aspect Race_Roo_Jpa_ActiveRecord {
@@ -14,30 +15,60 @@ privileged aspect Race_Roo_Jpa_ActiveRecord {
     @PersistenceContext
     transient EntityManager Race.entityManager;
     
+    public static final List<String> Race.fieldNames4OrderClauseFilter = java.util.Arrays.asList("scores");
+    
     public static final EntityManager Race.entityManager() {
         EntityManager em = new Race().entityManager;
         if (em == null) throw new IllegalStateException("Entity manager has not been injected (is the Spring Aspects JAR configured as an AJC/AJDT aspects library?)");
         return em;
     }
     
+    @Transactional
     public static long Race.countRaces() {
-        return entityManager().createQuery("SELECT COUNT(o) FROM Race o", Long.class).getSingleResult();
+        return findAllRaces().size();
     }
     
+    @Transactional
     public static List<Race> Race.findAllRaces() {
         return entityManager().createQuery("SELECT o FROM Race o", Race.class).getResultList();
     }
     
-    public static Race Race.findRace(Long id) {
-        if (id == null) return null;
+    @Transactional
+    public static List<Race> Race.findAllRaces(String sortFieldName, String sortOrder) {
+        String jpaQuery = "SELECT o FROM Race o";
+        if (fieldNames4OrderClauseFilter.contains(sortFieldName)) {
+            jpaQuery = jpaQuery + " ORDER BY " + sortFieldName;
+            if ("ASC".equalsIgnoreCase(sortOrder) || "DESC".equalsIgnoreCase(sortOrder)) {
+                jpaQuery = jpaQuery + " " + sortOrder;
+            }
+        }
+        return entityManager().createQuery(jpaQuery, Race.class).getResultList();
+    }
+    
+    @Transactional
+    public static Race Race.findRace(String id) {
+        if (id == null || id.length() == 0) return null;
         return entityManager().find(Race.class, id);
     }
     
+    @Transactional
     public static List<Race> Race.findRaceEntries(int firstResult, int maxResults) {
         return entityManager().createQuery("SELECT o FROM Race o", Race.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
     }
     
     @Transactional
+    public static List<Race> Race.findRaceEntries(int firstResult, int maxResults, String sortFieldName, String sortOrder) {
+        String jpaQuery = "SELECT o FROM Race o";
+        if (fieldNames4OrderClauseFilter.contains(sortFieldName)) {
+            jpaQuery = jpaQuery + " ORDER BY " + sortFieldName;
+            if ("ASC".equalsIgnoreCase(sortOrder) || "DESC".equalsIgnoreCase(sortOrder)) {
+                jpaQuery = jpaQuery + " " + sortOrder;
+            }
+        }
+        return entityManager().createQuery(jpaQuery, Race.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
+    }
+    
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void Race.persist() {
         if (this.entityManager == null) this.entityManager = entityManager();
         this.entityManager.persist(this);

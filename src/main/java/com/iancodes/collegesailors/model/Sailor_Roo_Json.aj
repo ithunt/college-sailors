@@ -13,27 +13,33 @@ import java.util.List;
 privileged aspect Sailor_Roo_Json {
     
     public String Sailor.toJson() {
-        return new JSONSerializer().exclude("*.class").serialize(this);
+        return new JSONSerializer()
+        .exclude("*.class").serialize(this);
     }
     
     public String Sailor.toJson(String[] fields) {
-        return new JSONSerializer().include(fields).exclude("*.class").serialize(this);
+        return new JSONSerializer()
+        .include(fields).exclude("*.class").serialize(this);
     }
     
     public static Sailor Sailor.fromJsonToSailor(String json) {
-        return new JSONDeserializer<Sailor>().use(null, Sailor.class).deserialize(json);
+        return new JSONDeserializer<Sailor>()
+        .use(null, Sailor.class).deserialize(json);
     }
     
     public static String Sailor.toJsonArray(Collection<Sailor> collection) {
-        return new JSONSerializer().exclude("*.class").serialize(collection);
+        return new JSONSerializer()
+        .exclude("*.class").serialize(collection);
     }
     
     public static String Sailor.toJsonArray(Collection<Sailor> collection, String[] fields) {
-        return new JSONSerializer().include(fields).exclude("*.class").serialize(collection);
+        return new JSONSerializer()
+        .include(fields).exclude("*.class").serialize(collection);
     }
     
     public static Collection<Sailor> Sailor.fromJsonArrayToSailors(String json) {
-        return new JSONDeserializer<List<Sailor>>().use(null, ArrayList.class).use("values", Sailor.class).deserialize(json);
+        return new JSONDeserializer<List<Sailor>>()
+        .use("values", Sailor.class).deserialize(json);
     }
     
 }

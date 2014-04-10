@@ -15,7 +15,8 @@ import org.springframework.roo.addon.json.RooJson;
 
 @RooJavaBean
 @RooToString
-@RooJpaActiveRecord
+//@RooJpaActiveRecord
+@RooJpaActiveRecord(identifierType = String.class, versionType = Long.class)
 @RooJson
 public class Team {
 

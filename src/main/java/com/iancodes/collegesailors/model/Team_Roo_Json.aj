@@ -13,27 +13,33 @@ import java.util.List;
 privileged aspect Team_Roo_Json {
     
     public String Team.toJson() {
-        return new JSONSerializer().exclude("*.class").serialize(this);
+        return new JSONSerializer()
+        .exclude("*.class").serialize(this);
     }
     
     public String Team.toJson(String[] fields) {
-        return new JSONSerializer().include(fields).exclude("*.class").serialize(this);
+        return new JSONSerializer()
+        .include(fields).exclude("*.class").serialize(this);
     }
     
     public static Team Team.fromJsonToTeam(String json) {
-        return new JSONDeserializer<Team>().use(null, Team.class).deserialize(json);
+        return new JSONDeserializer<Team>()
+        .use(null, Team.class).deserialize(json);
     }
     
     public static String Team.toJsonArray(Collection<Team> collection) {
-        return new JSONSerializer().exclude("*.class").serialize(collection);
+        return new JSONSerializer()
+        .exclude("*.class").serialize(collection);
     }
     
     public static String Team.toJsonArray(Collection<Team> collection, String[] fields) {
-        return new JSONSerializer().include(fields).exclude("*.class").serialize(collection);
+        return new JSONSerializer()
+        .include(fields).exclude("*.class").serialize(collection);
     }
     
     public static Collection<Team> Team.fromJsonArrayToTeams(String json) {
-        return new JSONDeserializer<List<Team>>().use(null, ArrayList.class).use("values", Team.class).deserialize(json);
+        return new JSONDeserializer<List<Team>>()
+        .use("values", Team.class).deserialize(json);
     }
     
 }

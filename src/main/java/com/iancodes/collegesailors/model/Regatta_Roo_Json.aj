@@ -13,27 +13,33 @@ import java.util.List;
 privileged aspect Regatta_Roo_Json {
     
     public String Regatta.toJson() {
-        return new JSONSerializer().exclude("*.class").serialize(this);
+        return new JSONSerializer()
+        .exclude("*.class").serialize(this);
     }
     
     public String Regatta.toJson(String[] fields) {
-        return new JSONSerializer().include(fields).exclude("*.class").serialize(this);
+        return new JSONSerializer()
+        .include(fields).exclude("*.class").serialize(this);
     }
     
     public static Regatta Regatta.fromJsonToRegatta(String json) {
-        return new JSONDeserializer<Regatta>().use(null, Regatta.class).deserialize(json);
+        return new JSONDeserializer<Regatta>()
+        .use(null, Regatta.class).deserialize(json);
     }
     
     public static String Regatta.toJsonArray(Collection<Regatta> collection) {
-        return new JSONSerializer().exclude("*.class").serialize(collection);
+        return new JSONSerializer()
+        .exclude("*.class").serialize(collection);
     }
     
     public static String Regatta.toJsonArray(Collection<Regatta> collection, String[] fields) {
-        return new JSONSerializer().include(fields).exclude("*.class").serialize(collection);
+        return new JSONSerializer()
+        .include(fields).exclude("*.class").serialize(collection);
     }
     
     public static Collection<Regatta> Regatta.fromJsonArrayToRegattas(String json) {
-        return new JSONDeserializer<List<Regatta>>().use(null, ArrayList.class).use("values", Regatta.class).deserialize(json);
+        return new JSONDeserializer<List<Regatta>>()
+        .use("values", Regatta.class).deserialize(json);
     }
     
 }

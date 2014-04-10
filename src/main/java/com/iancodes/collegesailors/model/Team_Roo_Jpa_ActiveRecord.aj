@@ -7,6 +7,7 @@ import com.iancodes.collegesailors.model.Team;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 privileged aspect Team_Roo_Jpa_ActiveRecord {
@@ -14,30 +15,60 @@ privileged aspect Team_Roo_Jpa_ActiveRecord {
     @PersistenceContext
     transient EntityManager Team.entityManager;
     
+    public static final List<String> Team.fieldNames4OrderClauseFilter = java.util.Arrays.asList("created", "sailors");
+    
     public static final EntityManager Team.entityManager() {
         EntityManager em = new Team().entityManager;
         if (em == null) throw new IllegalStateException("Entity manager has not been injected (is the Spring Aspects JAR configured as an AJC/AJDT aspects library?)");
         return em;
     }
     
+    @Transactional
     public static long Team.countTeams() {
-        return entityManager().createQuery("SELECT COUNT(o) FROM Team o", Long.class).getSingleResult();
+        return findAllTeams().size();
     }
     
+    @Transactional
     public static List<Team> Team.findAllTeams() {
         return entityManager().createQuery("SELECT o FROM Team o", Team.class).getResultList();
     }
     
-    public static Team Team.findTeam(Long id) {
-        if (id == null) return null;
+    @Transactional
+    public static List<Team> Team.findAllTeams(String sortFieldName, String sortOrder) {
+        String jpaQuery = "SELECT o FROM Team o";
+        if (fieldNames4OrderClauseFilter.contains(sortFieldName)) {
+            jpaQuery = jpaQuery + " ORDER BY " + sortFieldName;
+            if ("ASC".equalsIgnoreCase(sortOrder) || "DESC".equalsIgnoreCase(sortOrder)) {
+                jpaQuery = jpaQuery + " " + sortOrder;
+            }
+        }
+        return entityManager().createQuery(jpaQuery, Team.class).getResultList();
+    }
+    
+    @Transactional
+    public static Team Team.findTeam(String id) {
+        if (id == null || id.length() == 0) return null;
         return entityManager().find(Team.class, id);
     }
     
+    @Transactional
     public static List<Team> Team.findTeamEntries(int firstResult, int maxResults) {
         return entityManager().createQuery("SELECT o FROM Team o", Team.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
     }
     
     @Transactional
+    public static List<Team> Team.findTeamEntries(int firstResult, int maxResults, String sortFieldName, String sortOrder) {
+        String jpaQuery = "SELECT o FROM Team o";
+        if (fieldNames4OrderClauseFilter.contains(sortFieldName)) {
+            jpaQuery = jpaQuery + " ORDER BY " + sortFieldName;
+            if ("ASC".equalsIgnoreCase(sortOrder) || "DESC".equalsIgnoreCase(sortOrder)) {
+                jpaQuery = jpaQuery + " " + sortOrder;
+            }
+        }
+        return entityManager().createQuery(jpaQuery, Team.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
+    }
+    
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void Team.persist() {
         if (this.entityManager == null) this.entityManager = entityManager();
         this.entityManager.persist(this);

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:list id="pl_com_iancodes_collegesailors_model_Team" items="${teams}" z="lORNDJDauZFoevq3rE3JEozBIPQ=">
+        <table:table data="${teams}" id="l_com_iancodes_collegesailors_model_Team" path="/teams" z="iOht3+37ebfFpdcIqVyyhMgbTMI=">
+            <table:column date="true" dateTimePattern="${team_created_date_format}" id="c_com_iancodes_collegesailors_model_Team_created" property="created" z="rH0vsqTlXhQk7ntaQXG5LZkoDMQ="/>
+            <table:column id="c_com_iancodes_collegesailors_model_Team_sailors" property="sailors" z="vhqdjyeTx5WZsWGUiMhbqVKJE6g="/>
+        </table:table>
+    </page:list>
+</div>

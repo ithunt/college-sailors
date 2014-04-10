@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:show id="ps_com_iancodes_collegesailors_model_Regatta" object="${regatta}" path="/regattas" z="uh4fm4Al0HFY1W0ZIVM7nCpYWqg=">
+        <field:display field="host" id="s_com_iancodes_collegesailors_model_Regatta_host" object="${regatta}" z="f46wq1/7zP6Q5iILY3nUr+gLi6k="/>
+        <field:display date="true" dateTimePattern="${regatta_regattadate_date_format}" field="regattaDate" id="s_com_iancodes_collegesailors_model_Regatta_regattaDate" object="${regatta}" z="q4urs599ZLVjHoN6yVrgRR/oQEw="/>
+        <field:display field="regattaName" id="s_com_iancodes_collegesailors_model_Regatta_regattaName" object="${regatta}" z="VyB4FJGIzrcQD3mON7zBZQ1weoA="/>
+        <field:display field="boat" id="s_com_iancodes_collegesailors_model_Regatta_boat" object="${regatta}" z="A4C5Gh7j+vvOQHWlekXLlLv19EE="/>
+        <field:display field="scoring" id="s_com_iancodes_collegesailors_model_Regatta_scoring" object="${regatta}" z="0FJk/ecL1g7kp4D6PY5k04oaidA="/>
+    </page:show>
+</div>

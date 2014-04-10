@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:show id="ps_com_iancodes_collegesailors_model_College" object="${college}" path="/colleges" z="zdkMdQUfls0v6cVXqIzavacPVBg=">
+        <field:display field="collegeName" id="s_com_iancodes_collegesailors_model_College_collegeName" object="${college}" z="VzI36sqqFXJZJ73Hbnrk/v/CsHg="/>
+        <field:display field="burgee" id="s_com_iancodes_collegesailors_model_College_burgee" object="${college}" z="hWIPpO4TlTqKmM3WjOzMTBuj5ZE="/>
+        <field:display field="sailors" id="s_com_iancodes_collegesailors_model_College_sailors" object="${college}" z="6/4fczOJLdiW0od4I7FCCsXtnpA="/>
+    </page:show>
+</div>

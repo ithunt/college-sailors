@@ -10,33 +10,35 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Version;
+import org.datanucleus.api.jpa.annotations.Extension;
 
 privileged aspect Race_Roo_Jpa_Entity {
     
     declare @type: Race: @Entity;
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Extension(vendorName = "datanucleus", key = "gae.encoded-pk", value = "true")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long Race.id;
+    private String Race.id;
     
     @Version
     @Column(name = "version")
-    private Integer Race.version;
+    private Long Race.version;
     
-    public Long Race.getId() {
+    public String Race.getId() {
         return this.id;
     }
     
-    public void Race.setId(Long id) {
+    public void Race.setId(String id) {
         this.id = id;
     }
     
-    public Integer Race.getVersion() {
+    public Long Race.getVersion() {
         return this.version;
     }
     
-    public void Race.setVersion(Integer version) {
+    public void Race.setVersion(Long version) {
         this.version = version;
     }
     

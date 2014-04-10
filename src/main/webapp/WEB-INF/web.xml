@@ -2,10 +2,16 @@
 <web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.5" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 
     
-    <display-name>collegesailors</display-name>
+    <display-name>College Sailors</display-name>
     
-    <description>Roo generated collegesailors application</description>
+    <description>Explore College Sailing</description>
 
+    
+    <!-- Enable escaping of form submission contents -->
+    <context-param>
+        <param-name>defaultHtmlEscape</param-name>
+        <param-value>true</param-value>
+    </context-param>
     
     <context-param>
         <param-name>contextConfigLocation</param-name>
@@ -31,6 +37,11 @@
         <filter-name>HttpMethodFilter</filter-name>
         <filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
     </filter>
+    
+    <filter>
+        <filter-name>Spring OpenEntityManagerInViewFilter</filter-name>
+        <filter-class>org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter</filter-class>
+    </filter>
     <filter-mapping>
         <filter-name>CharacterEncodingFilter</filter-name>
         <url-pattern>/*</url-pattern>
@@ -41,6 +52,11 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
     
+    <filter-mapping>
+        <filter-name>Spring OpenEntityManagerInViewFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    
     <!-- Creates the Spring Container shared by all Servlets and Filters -->
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
@@ -48,7 +64,7 @@
     
     <!-- Handles Spring requests -->
     <servlet>
-        <servlet-name>collegesailors</servlet-name>
+        <servlet-name>collegesailing</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <init-param>
             <param-name>contextConfigLocation</param-name>
@@ -58,7 +74,21 @@
     </servlet>
     
     <servlet-mapping>
-        <servlet-name>collegesailors</servlet-name>
+        <servlet-name>collegesailing</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
+    
+    <session-config>
+        <session-timeout>10</session-timeout>
+    </session-config>
+    
+    <error-page>
+        <exception-type>java.lang.Exception</exception-type>
+        <location>/uncaughtException</location>
+    </error-page>
+    
+    <error-page>
+        <error-code>404</error-code>
+        <location>/resourceNotFound</location>
+    </error-page>
 </web-app>

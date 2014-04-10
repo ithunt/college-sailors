@@ -10,33 +10,35 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Version;
+import org.datanucleus.api.jpa.annotations.Extension;
 
 privileged aspect FleetScore_Roo_Jpa_Entity {
     
     declare @type: FleetScore: @Entity;
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Extension(vendorName = "datanucleus", key = "gae.encoded-pk", value = "true")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long FleetScore.id;
+    private String FleetScore.id;
     
     @Version
     @Column(name = "version")
-    private Integer FleetScore.version;
+    private Long FleetScore.version;
     
-    public Long FleetScore.getId() {
+    public String FleetScore.getId() {
         return this.id;
     }
     
-    public void FleetScore.setId(Long id) {
+    public void FleetScore.setId(String id) {
         this.id = id;
     }
     
-    public Integer FleetScore.getVersion() {
+    public Long FleetScore.getVersion() {
         return this.version;
     }
     
-    public void FleetScore.setVersion(Integer version) {
+    public void FleetScore.setVersion(Long version) {
         this.version = version;
     }
     

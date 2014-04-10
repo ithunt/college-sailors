@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:list id="pl_com_iancodes_collegesailors_model_College" items="${colleges}" z="trNepE3U0UafD2Q20kdh9L1lVBs=">
+        <table:table data="${colleges}" id="l_com_iancodes_collegesailors_model_College" path="/colleges" z="Wfhc6+46o0sPZAqo5lEhhKemQyY=">
+            <table:column id="c_com_iancodes_collegesailors_model_College_collegeName" property="collegeName" z="xnpWGACiztnE57omQ8Tz30XtpeY="/>
+            <table:column id="c_com_iancodes_collegesailors_model_College_burgee" property="burgee" z="VWHAbo2lkHhZdMqri+sH+bPyh8Q="/>
+            <table:column id="c_com_iancodes_collegesailors_model_College_sailors" property="sailors" z="IgxVZV8uXqweDXLYsp9kQCAQka8="/>
+        </table:table>
+    </page:list>
+</div>

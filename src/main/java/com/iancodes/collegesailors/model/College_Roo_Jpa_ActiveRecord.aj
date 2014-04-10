@@ -7,6 +7,7 @@ import com.iancodes.collegesailors.model.College;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 privileged aspect College_Roo_Jpa_ActiveRecord {
@@ -14,30 +15,60 @@ privileged aspect College_Roo_Jpa_ActiveRecord {
     @PersistenceContext
     transient EntityManager College.entityManager;
     
+    public static final List<String> College.fieldNames4OrderClauseFilter = java.util.Arrays.asList("collegeName", "burgee", "sailors");
+    
     public static final EntityManager College.entityManager() {
         EntityManager em = new College().entityManager;
         if (em == null) throw new IllegalStateException("Entity manager has not been injected (is the Spring Aspects JAR configured as an AJC/AJDT aspects library?)");
         return em;
     }
     
+    @Transactional
     public static long College.countColleges() {
-        return entityManager().createQuery("SELECT COUNT(o) FROM College o", Long.class).getSingleResult();
+        return findAllColleges().size();
     }
     
+    @Transactional
     public static List<College> College.findAllColleges() {
         return entityManager().createQuery("SELECT o FROM College o", College.class).getResultList();
     }
     
-    public static College College.findCollege(Long id) {
-        if (id == null) return null;
+    @Transactional
+    public static List<College> College.findAllColleges(String sortFieldName, String sortOrder) {
+        String jpaQuery = "SELECT o FROM College o";
+        if (fieldNames4OrderClauseFilter.contains(sortFieldName)) {
+            jpaQuery = jpaQuery + " ORDER BY " + sortFieldName;
+            if ("ASC".equalsIgnoreCase(sortOrder) || "DESC".equalsIgnoreCase(sortOrder)) {
+                jpaQuery = jpaQuery + " " + sortOrder;
+            }
+        }
+        return entityManager().createQuery(jpaQuery, College.class).getResultList();
+    }
+    
+    @Transactional
+    public static College College.findCollege(String id) {
+        if (id == null || id.length() == 0) return null;
         return entityManager().find(College.class, id);
     }
     
+    @Transactional
     public static List<College> College.findCollegeEntries(int firstResult, int maxResults) {
         return entityManager().createQuery("SELECT o FROM College o", College.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
     }
     
     @Transactional
+    public static List<College> College.findCollegeEntries(int firstResult, int maxResults, String sortFieldName, String sortOrder) {
+        String jpaQuery = "SELECT o FROM College o";
+        if (fieldNames4OrderClauseFilter.contains(sortFieldName)) {
+            jpaQuery = jpaQuery + " ORDER BY " + sortFieldName;
+            if ("ASC".equalsIgnoreCase(sortOrder) || "DESC".equalsIgnoreCase(sortOrder)) {
+                jpaQuery = jpaQuery + " " + sortOrder;
+            }
+        }
+        return entityManager().createQuery(jpaQuery, College.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
+    }
+    
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void College.persist() {
         if (this.entityManager == null) this.entityManager = entityManager();
         this.entityManager.persist(this);

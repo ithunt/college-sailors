@@ -10,33 +10,35 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Version;
+import org.datanucleus.api.jpa.annotations.Extension;
 
 privileged aspect Sailor_Roo_Jpa_Entity {
     
     declare @type: Sailor: @Entity;
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Extension(vendorName = "datanucleus", key = "gae.encoded-pk", value = "true")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long Sailor.id;
+    private String Sailor.id;
     
     @Version
     @Column(name = "version")
-    private Integer Sailor.version;
+    private Long Sailor.version;
     
-    public Long Sailor.getId() {
+    public String Sailor.getId() {
         return this.id;
     }
     
-    public void Sailor.setId(Long id) {
+    public void Sailor.setId(String id) {
         this.id = id;
     }
     
-    public Integer Sailor.getVersion() {
+    public Long Sailor.getVersion() {
         return this.version;
     }
     
-    public void Sailor.setVersion(Integer version) {
+    public void Sailor.setVersion(Long version) {
         this.version = version;
     }
     
